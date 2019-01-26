@@ -3,20 +3,13 @@ import { inject } from 'aurelia-framework';
 
 @inject(HttpClient)
 export class Fetchdata {
-    public forecasts: WeatherForecast[];
+    public pokemon: any;
 
     constructor(http: HttpClient) {
-        http.fetch('api/SampleData/WeatherForecasts')
-            .then(result => result.json() as Promise<WeatherForecast[]>)
+        http.fetch('api/SampleData/GetAsync')
+            .then(result => result.json() as Promise<any>)
             .then(data => {
-                this.forecasts = data;
+                this.pokemon = data;
             });
     }
-}
-
-interface WeatherForecast {
-    dateFormatted: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
 }
