@@ -1,3 +1,20 @@
 <template>
+        <form role="form" submit.delegate="signup()">
+                
+            <label for="firstname">firstname</label>
+                <input type="text" value.bind="firstname" placeholder="firstname">
+
+                <label for="lastname">lastname</label>
+            <input type="text" value.bind="lastname" placeholder="lastname">
+
+            <label for="email">Email</label>
+            <input type="text" value.bind="email" placeholder="Email">
     
-</template>
+            <label for="password">Password</label>
+            <input type="password" value.bind="password" placeholder="Password">
+            <label for="confirm">Confirm Password</label>
+            <input type="confirm" value.bind="confirm" placeholder="Confirm">
+    
+            <button type="submit">Signup</button>
+        </form>
+    </template>

@@ -1,3 +1,12 @@
 <template>
+    <form role="form" submit.delegate="signup()">
+
+        <label for="email">Email</label>
+        <input type="text" value.bind="email" placeholder="Email">
+
+        <label for="password">Password</label>
+        <input type="password" value.bind="password" placeholder="Password">
+
+        <button type="submit">Signup</button>
+    </form>
 </template>
-    
