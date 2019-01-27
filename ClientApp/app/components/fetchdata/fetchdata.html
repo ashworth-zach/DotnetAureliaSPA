@@ -1,10 +1,21 @@
 <template>
-    <h1>Weather forecast</h1>
+        <require from="./fetchdatastyle.css"></require>
+    <h1>Random pokemon fetch</h1>
 
-    <p>This component demonstrates fetching datasdfa from the server.</p>
+    <p>This component demonstrates fetching data from an external api.</p>
 
     <p if.bind="!pokemon"><em>Loading...</em></p>
-    <p>${pokemon}</p>
-
+    <h1>Name: ${pokemon.name}</h1>
+    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+    <table>
+            <th>id</th>
+            <th>Base experience</th>
+            <th>height</th>
+            <tr>
+                <td>${pokemon.id}</td>
+                <td>${pokemon.base_experience}</td>
+                <td>${pokemon.height}</td>
+            </tr>
+    </table>
 
 </template>

@@ -3,7 +3,7 @@ import { Router, RouterConfiguration } from 'aurelia-router';
 
 export class App {
     router: Router;
-
+    
     configureRouter(config: RouterConfiguration, router: Router) {
         config.title = 'aureliadotnet';
         config.map([{
@@ -20,6 +20,20 @@ export class App {
             moduleId: PLATFORM.moduleName('../counter/counter'),
             nav: true,
             title: 'Counter'
+        },{
+            route: 'login',
+            name: 'login',
+            settings: { icon: 'education' },
+            moduleId: PLATFORM.moduleName('../login/login'),
+            nav: true,
+            title: 'Login'
+        },{
+            route: 'register',
+            name: 'register',
+            settings: { icon: 'education' },
+            moduleId: PLATFORM.moduleName('../register/register'),
+            nav: true,
+            title: 'Register'
         }, {
             route: 'fetch-data',
             name: 'fetchdata',
