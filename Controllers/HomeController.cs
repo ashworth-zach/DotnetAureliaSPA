@@ -13,12 +13,6 @@ namespace aureliadotnet.Controllers
 {
     public class HomeController : Controller
     {
-        private Context dbContext;
-
-        public HomeController(Context context)
-        {
-            dbContext = context;
-        }
         public IActionResult Index()
         {
             return View();
