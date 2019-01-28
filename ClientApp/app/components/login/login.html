@@ -1,11 +1,15 @@
 <template>
+    <require from="./login.css"></require>
+    <div class="jumbotron">
+        <h1 class="text-center">Login</h1>
+    </div>
     <form role="form" submit.delegate="signup()">
 
         <label for="email">Email</label>
         <input type="text" value.bind="email" placeholder="Email">
 
         <label for="password">Password</label>
-        <input type="password" value.bind="password" placeholder="Password">
+        <input type="password" value.bind="password" placeholder="Password"><br>
 
         <button type="submit">Signup</button>
     </form>

@@ -1,6 +1,11 @@
 <template>
-        <form role="form" submit.delegate="signup()">
-                
+    <require from="./register.css"></require>
+    <div class="jumbotron">
+            <h1 class="text-center">register</h1>
+        </div>
+        <p class="errors">${error}</p>
+        <form role="form" submit.delegate="RegisterUser()">
+            
             <label for="firstname">firstname</label>
                 <input type="text" value.bind="firstname" placeholder="firstname">
 
@@ -13,7 +18,7 @@
             <label for="password">Password</label>
             <input type="password" value.bind="password" placeholder="Password">
             <label for="confirm">Confirm Password</label>
-            <input type="confirm" value.bind="confirm" placeholder="Confirm">
+            <input type="password" value.bind="confirm" placeholder="Confirm"><br>
     
             <button type="submit">Signup</button>
         </form>
