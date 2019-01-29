@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 namespace aureliadotnet.Models
 {
-    [Table("user", Schema = "aureliatestdb")]
+    [Table("users", Schema = "aureliatestdb")]
     public class User
     {
         // auto-implemented properties need to match columns in your table

@@ -25,6 +25,7 @@ namespace aureliadotnet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            services.AddSession();
             services.AddMvc();
         }
 
@@ -45,7 +46,7 @@ namespace aureliadotnet
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
