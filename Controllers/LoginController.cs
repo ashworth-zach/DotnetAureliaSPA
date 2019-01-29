@@ -21,6 +21,13 @@ namespace aureliadotnet.Controllers
         {
             dbContext = context;
         }
+        // [HttpGet("[action]")]
+        // public JsonResult Test()
+        // {
+        //     Dictionary<string, string> testdata = new Dictionary<string, string>();
+        //     testdata.Add("test", "test");
+        //     return Json(testdata);
+        // }
 
         [HttpPost("[action]")]
         public JsonResult Login([FromBody] Login credentials)
@@ -61,13 +68,6 @@ namespace aureliadotnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (dbContext.users.Any(u => u.email == newUser.email))
-                {
-                    Dictionary<string, string> error = new Dictionary<string, string>();
-                    error.Add("Message", "Error");
-                    error.Add("email", "Email is already in use");
-                    return Json(error);
-                }
                 if (dbContext.users.Any(u => u.email == newUser.email))
                 {
                     Dictionary<string, string> error = new Dictionary<string, string>();
