@@ -30,7 +30,7 @@ namespace aureliadotnet.Controllers
         // }
 
         [HttpPost("[action]")]
-        public JsonResult Login([FromBody] Login credentials)
+        public JsonResult LoginUser([FromBody] Login credentials)
         {
             if (ModelState.IsValid)
             {

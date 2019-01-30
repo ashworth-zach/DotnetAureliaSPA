@@ -19,6 +19,10 @@ module.exports = (env) => {
         },
         module: {
             rules: [
+                {
+                    test: /\.exec\.js$/,
+                    use: ['script-loader']
+                },
                 { test: /\.ts$/i, include: /ClientApp/, use: 'ts-loader?silent=true' },
                 { test: /\.html$/i, use: 'html-loader' },
                 { test: /\.css$/i, use: isDevBuild ? 'css-loader' : 'css-loader?minimize' },
@@ -38,7 +42,7 @@ module.exports = (env) => {
                 moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]')  // Point sourcemap entries to the original file locations on disk
             })
         ] : [
-            new webpack.optimize.UglifyJsPlugin()
-        ])
+                new webpack.optimize.UglifyJsPlugin()
+            ])
     }];
 }

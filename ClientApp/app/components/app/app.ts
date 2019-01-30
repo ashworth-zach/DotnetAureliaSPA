@@ -35,6 +35,13 @@ export class App {
             nav: true,
             title: 'Register'
         }, {
+            route: 'bitcoin',
+            name: 'bitcoin',
+            settings: { icon: 'education' },
+            moduleId: PLATFORM.moduleName('../bitcoin/bitcoin'),
+            nav: true,
+            title: 'Bitcoin'
+        },{
             route: 'fetch-data',
             name: 'fetchdata',
             settings: { icon: 'th-list' },

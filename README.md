@@ -1,4 +1,4 @@
 # DotnetAureliaSPA
 Single page application demo using dotnet new aurelia.
 
-_planning on building out login registration_
+Login registration, bitcoin price, pokemon data fetch, counter and other stuff... Big ol' aurelia single page app demo.
