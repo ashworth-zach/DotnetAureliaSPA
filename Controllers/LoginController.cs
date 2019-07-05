@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using aureliadotnet.Models;
-using Microsoft.EntityFrameworkCore;
+using aureliadotnet.Interfaces;
+using aureliadotnet.Services;
 
 namespace aureliadotnet.Controllers
 {
     
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class LoginController : Controller, ILoginController
     {
-        private Context dbContext;
+        private RepositoryService _repoService;
 
-        public LoginController(Context context)
+
+        public LoginController(RepositoryService RepositoryService)
         {
-            dbContext = context;
+            this._repoService=RepositoryService;
         }
         // [HttpGet("[action]")]
         // public JsonResult Test()
@@ -34,28 +34,16 @@ namespace aureliadotnet.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userInDb = dbContext.users.FirstOrDefault(u => u.email == credentials.email);
-                Dictionary<string, string> error = new Dictionary<string, string>();
-                if (userInDb == null)
-                {
-                    error.Add("Message", "Error");
-                    error.Add("email", "Invalid email");
-                    return Json(error);
+                Tuple<User, Dictionary<string, string>> loginAttempt = this._repoService.TryLogin(credentials);
+                if(loginAttempt.Item2.Any(x=>x.Value=="Error")){
+                    return Json(loginAttempt.Item2);
                 }
-                var hasher = new PasswordHasher<Login>();
-                var result = hasher.VerifyHashedPassword(credentials, userInDb.password, credentials.password);
+                else{
+                    //success
+                    HttpContext.Session.SetInt32("UserId", loginAttempt.Item1.UserId);
 
-                if (result == 0)
-                {
-                    error.Add("Message", "Error");
-                    error.Add("password", "Invalid password");
-                    return Json(error);
+                    return Json(loginAttempt.Item2);
                 }
-
-                HttpContext.Session.SetInt32("UserId", userInDb.UserId);
-                Dictionary<string, string> success = new Dictionary<string, string>();
-                success.Add("Message", "Success");
-                return Json(success);
             }
             else
             {
@@ -64,34 +52,20 @@ namespace aureliadotnet.Controllers
         }
         
         [HttpPost("[action]")]
-        public JsonResult RegisterUser([FromBody] Register newUser)
+        public async Task<JsonResult> RegisterUser([FromBody] Register newUser)
         {
             if (ModelState.IsValid)
             {
-                if (dbContext.users.Any(u => u.email == newUser.email))
-                {
-                    Dictionary<string, string> error = new Dictionary<string, string>();
-                    error.Add("Message", "Error");
-                    error.Add("email", "Email is already in use");
-                    return Json(error);
+                Tuple<User, Dictionary<string, string>> loginAttempt = await this._repoService.TryRegisterUser(newUser);
+                if(loginAttempt.Item2.Any(x=>x.Value=="Error")){
+                    return Json(loginAttempt.Item2);
                 }
-                PasswordHasher<Register> Hasher = new PasswordHasher<Register>();
-                newUser.password = Hasher.HashPassword(newUser, newUser.password);
-                User usertoAdd = new User
-                {
-                    firstname = newUser.firstname,
-                    lastname = newUser.lastname,
-                    password = newUser.password,
-                    email = newUser.email,
-                };
-                dbContext.users.Add(usertoAdd);
-                dbContext.SaveChanges();
-                User User = dbContext.users.FirstOrDefault(x => x.email == newUser.email);
-                HttpContext.Session.SetInt32("UserId", User.UserId);
+                else{
+                    //success
+                    HttpContext.Session.SetInt32("UserId", loginAttempt.Item1.UserId);
 
-                Dictionary<string, string> success = new Dictionary<string, string>();
-                success.Add("Message", "Success");
-                return Json(success);
+                    return Json(loginAttempt.Item2);
+                }
             }
             else
             {
