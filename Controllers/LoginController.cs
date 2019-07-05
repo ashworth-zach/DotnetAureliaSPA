@@ -31,24 +31,22 @@ namespace aureliadotnet.Controllers
         [HttpPost("[action]")]
         public JsonResult LoginUser([FromBody] Login credentials)
         {
-            try{
-                if (ModelState.IsValid)
-                {
-                    Tuple<User, Dictionary<string, string>> loginAttempt = this._repoService.TryLogin(credentials);
-                    if(loginAttempt.Item2.Any(x=>x.Value=="Error")){
-                        return Json(loginAttempt.Item2);
-                    }
-                    else{
-                        //success
-                        HttpContext.Session.SetInt32("UserId", loginAttempt.Item1.UserId);
+            if (ModelState.IsValid)
+            {
+                Tuple<User, Dictionary<string, string>> loginAttempt = this._repoService.TryLogin(credentials);
+                if(loginAttempt.Item2.Any(x=>x.Value=="Error")){
+                    return Json(loginAttempt.Item2);
+                }
+                else{
+                    //success
+                    HttpContext.Session.SetInt32("UserId", loginAttempt.Item1.UserId);
 
-                        return Json(loginAttempt.Item2);
-                    }
+                    return Json(loginAttempt.Item2);
                 }
-                else
-                {
-                    return Json(ModelState);
-                }
+            }
+            else
+            {
+                return Json(ModelState);
             }
         }
         
