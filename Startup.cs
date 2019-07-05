@@ -10,8 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using aureliadotnet.Models;
 using Microsoft.EntityFrameworkCore;
-
-
+using aureliadotnet.Services;
+using aureliadotnet.Interfaces;
+using aureliadotnet.Controllers;
 namespace aureliadotnet
 {
     public class Startup
@@ -25,6 +26,8 @@ namespace aureliadotnet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(options => options.UseMySql(Configuration["DBInfo:ConnectionString"]));
+            services.AddTransient<IRepositoryService, RepositoryService>();
+            services.AddTransient<ILoginController, LoginController>();
             services.AddSession();
             services.AddMvc();
         }
